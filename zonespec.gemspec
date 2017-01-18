@@ -9,9 +9,9 @@ Gem::Specification.new do |spec|
   spec.authors       = ["R. Tyler Croy"]
   spec.email         = ["tyler@monkeypox.org"]
 
-  spec.summary       = %q{TODO: Write a short summary, because Rubygems requires one.}
-  spec.description   = %q{TODO: Write a longer description or delete this line.}
-  spec.homepage      = "TODO: Put your gem's website or public repo URL here."
+  spec.summary       = %q{A simple helper gem to make acceptance testing zonefiles easier}
+  spec.description   = %q{A simple helper gem to make acceptance testing zonefiles easier}
+  spec.homepage      = 'https://github.com/rtyler/zonespec'
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
   # to allow pushing to a single host or delete this section to allow pushing to any host.
@@ -28,4 +28,7 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency "bundler", "~> 1.12"
   spec.add_development_dependency "rake", "~> 10.0"
+
+  spec.add_dependency 'zonefile', '~> 1.04'
+  spec.add_dependency 'serverspec', '~> 2.38'
 end
