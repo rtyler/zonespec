@@ -4,6 +4,7 @@ require 'zonespec/rspec'
 describe dns_server('8.8.8.8') do
   describe zone('jenkins.io', 'spec/acceptance/jenkins.io.zone') do
     verify_all_cnames!
+    verify_all_a_records!
   end
 
   describe zone('jenkins.io') do

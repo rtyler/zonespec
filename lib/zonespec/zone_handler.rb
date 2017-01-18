@@ -18,6 +18,14 @@ module Zonespec
       return "Zone for #{@zone_name}"
     end
 
+    def serves_a_record?(name, host)
+      type = 'A'
+      fqdn = "#{name}.#{@zone_name}"
+      response = resolver.query(fqdn, type, 'IN')
+      answers = response.answer.select { |a| a.type == type }
+      answers.first.address.to_s == host
+    end
+
     def serves_cname?(name, host)
       type = 'CNAME'
       # if the CNAME ends with a dot, then it's already a FQDN
