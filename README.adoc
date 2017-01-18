@@ -4,6 +4,7 @@ A simple little gem for acceptance testing a provisioned DNS server's ability
 to respond based on records which were defined in a Zonefile.
 
 
+.spec/zone_acceptance_spec.rb
 [source,ruby]
 ----
 require 'spec_helper'
