@@ -1,0 +1,26 @@
+; Domain: example.com
+
+; SOA Record
+@  1D  IN  SOA    ns1.linux.com. rspec.linux.com. (
+                2017011701 ; serial, todays date + todays serial #
+                28800      ; refresh, seconds
+                7200       ; retry, seconds
+                604800     ; expire, seconds
+                3600       ; minimum, seconds
+                )
+
+; A Records
+@           3600    IN    A    127.0.0.1 ; lol
+
+; CNAME Records
+www         3600    IN    CNAME    @
+ftp         3600    IN    CNAME    www
+
+
+; NS Records
+@           3600    IN    NS    ns1.linux.com.
+
+; spam trap
+mx          3600    IN    MX    10 mxa.linux.com.
+
+@           3600          MX  10  mxa.linux.com.

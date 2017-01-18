@@ -28,7 +28,9 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency "bundler", "~> 1.12"
   spec.add_development_dependency "rake", "~> 10.0"
+  spec.add_development_dependency "rspec"
+  spec.add_development_dependency "pry"
 
   spec.add_dependency 'zonefile', '~> 1.04'
-  spec.add_dependency 'serverspec', '~> 2.38'
+  spec.add_dependency 'dnsruby', '~> 1.60'
 end
