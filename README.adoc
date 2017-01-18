@@ -1,0 +1,27 @@
+= Zonespec
+
+A simple little gem for acceptance testing a provisioned DNS server's ability
+to respond based on records which were defined in a Zonefile.
+
+
+[source,ruby]
+----
+require 'spec_helper'
+require 'zonespec/rspec'
+
+describe dns_server('8.8.8.8') do
+  describe zone('jenkins.io', 'path/to/jenkins.io.zone') do
+    # Generate all the test cases for CNAME records
+    verify_all_cnames!
+    # Generate all the test cases for A records
+    verify_all_a_records!
+  end
+
+  # Instead of testing with a Zone file, it's possible to describe the specific
+  # expectations manually.
+  describe zone('jenkins.io') do
+    it { should serve_cname('www', 'jenkins.io.') }
+    it { should serve_a_record('ftp', '127.0.0.1') }
+  end
+end
+----
