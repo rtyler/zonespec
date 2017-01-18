@@ -4,9 +4,14 @@ require 'dnsruby'
 
 module Zonespec
   class ZoneHandler
+    attr_reader :resolver, :dns_server
+
     def initialize(name, dns_server)
        @zone_name = name
        @dns_server = dns_server
+
+       @resolver = Dnsruby::Resolver.new
+       @resolver.nameserver = @dns_server
     end
 
     def to_s
@@ -14,18 +19,27 @@ module Zonespec
     end
 
     def serves_cname?(name, host)
+      type = 'CNAME'
+      # if the CNAME ends with a dot, then it's already a FQDN
+      # if the host ends with a dot, then it's already a FQDN
       fqdn = "#{name}.#{@zone_name}"
-      fqdn_alias = "#{host}.#{@zone_name}"
+      fqdn_host = "#{host}.#{@zone_name}"
+
+      if name.end_with? '.'
+        fqdn = name
+      end
+
+      # If the expected hostname ends with a dot, then that means the end
+      # should be chopped off
+      if host.end_with? '.'
+        fqdn_host = host[0 ... -1]
+      end
+
       begin
-        resolver = Dnsruby::Resolver.new
-        resolver.nameserver = @dns_server
-        r = resolver.query(fqdn, 'CNAME', 'IN')
-        answers = r.answer.select { |a| a.type == 'CNAME' }
-        if host.end_with? '.'
-          answers.first.domainname.to_s == host[0 ... -1]
-        else
-          answers.first.domainname.to_s == fqdn_alias
-        end
+        response = resolver.query(fqdn, type, 'IN')
+        answers = response.answer.select { |a| a.type == type }
+
+        answers.first.domainname.to_s == fqdn_host
       rescue Exception => e
         puts e
         false
